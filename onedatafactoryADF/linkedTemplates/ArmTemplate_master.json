@@ -244,6 +244,26 @@
 					},
 					"event based trigg_properties_typeProperties_scope": {
 						"value": "[parameters('event based trigg_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "onedatafactoryADF_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName": {
 						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName')]"
@@ -293,7 +313,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_1')]"
 			]
 		}
 	]
