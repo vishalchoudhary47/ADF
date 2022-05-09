@@ -56,7 +56,7 @@
 								"value": "@pipeline().globalParameters.FilePathTestingFolder",
 								"type": "Expression"
 							},
-							"FileNameDataset": "flightdatajson.csv"
+							"FileNameDataset": "convertcsv.csv"
 						}
 					}
 				],
