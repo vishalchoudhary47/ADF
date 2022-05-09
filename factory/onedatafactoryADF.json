@@ -1,5 +1,13 @@
 {
 	"name": "onedatafactoryADF",
+	"properties": {
+		"globalParameters": {
+			"FilePath": {
+				"type": "string",
+				"value": "input"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
