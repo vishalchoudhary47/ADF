@@ -2,9 +2,9 @@
 	"name": "onedatafactoryADF",
 	"properties": {
 		"globalParameters": {
-			"FilePath": {
+			"FilePathTestingFolder": {
 				"type": "string",
-				"value": "input"
+				"value": "adfdemo/testingFolder"
 			}
 		}
 	},
