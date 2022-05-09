@@ -1,0 +1,117 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "onedatafactoryADF"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"FtpServer1_password": {
+			"value": ""
+		},
+		"SinkSqlServer2_connectionString": {
+			"value": ""
+		},
+		"SinkSqlServer2_password": {
+			"value": ""
+		},
+		"SqlServer1_connectionString": {
+			"value": ""
+		},
+		"SqlServer1_password": {
+			"value": ""
+		},
+		"dynConnSqlServerDB_connectionString": {
+			"value": ""
+		},
+		"dynConnSqlServerDB_password": {
+			"value": ""
+		},
+		"testingAzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://vadlsstorageaccount.dfs.core.windows.net"
+		},
+		"FtpServer1_properties_typeProperties_host": {
+			"value": "ftp://ftp.dlptest.com/"
+		},
+		"FtpServer1_properties_typeProperties_userName": {
+			"value": "dlpuser"
+		},
+		"SinkSqlServer2_properties_typeProperties_userName": {
+			"value": "VISHAL\\HP"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "VISHAL\\HP"
+		},
+		"dynConnSqlServerDB_properties_typeProperties_userName": {
+			"value": "VISHAL\\HP"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName": {
+			"value": "script"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_SchemaName": {
+			"value": "dbo"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tablNAme": {
+			"value": "usersADF"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName2": {
+			"value": "CopyofScript"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tableName2": {
+			"value": "usersADF2"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName": {
+			"value": "UPDATE_tblControlADF"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_dbName": {
+			"value": "script"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName": {
+			"value": "dbo"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme": {
+			"value": "usersADF"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_dbName2": {
+			"value": "CopyofScript"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_tableName2": {
+			"value": "usersADF2"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
+			"value": "UPDATE_tblControlADF"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
+			"value": "script"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName": {
+			"value": "A"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB": {
+			"value": "trigger.csv"
+		},
+		"event based trigg_properties_event pipeline_parameters_filePath": {
+			"value": "@triggerBody().folderPath"
+		},
+		"event based trigg_properties_event pipeline_parameters_fileName": {
+			"value": "@triggerBody().fileName"
+		},
+		"event based trigg_properties_typeProperties_scope": {
+			"value": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

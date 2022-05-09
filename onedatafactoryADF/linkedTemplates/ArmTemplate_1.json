@@ -1,0 +1,1641 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "onedatafactoryADF"
+		},
+		"event based trigg_properties_event pipeline_parameters_filePath": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"event based trigg_properties_event pipeline_parameters_fileName": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"event based trigg_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName": {
+			"type": "string",
+			"defaultValue": "script"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_SchemaName": {
+			"type": "string",
+			"defaultValue": "dbo"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tablNAme": {
+			"type": "string",
+			"defaultValue": "usersADF"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName2": {
+			"type": "string",
+			"defaultValue": "CopyofScript"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tableName2": {
+			"type": "string",
+			"defaultValue": "usersADF2"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName": {
+			"type": "string",
+			"defaultValue": "UPDATE_tblControlADF"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_dbName": {
+			"type": "string",
+			"defaultValue": "script"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName": {
+			"type": "string",
+			"defaultValue": "dbo"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme": {
+			"type": "string",
+			"defaultValue": "usersADF"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_dbName2": {
+			"type": "string",
+			"defaultValue": "CopyofScript"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_tableName2": {
+			"type": "string",
+			"defaultValue": "usersADF2"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
+			"type": "string",
+			"defaultValue": "UPDATE_tblControlADF"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
+			"type": "string",
+			"defaultValue": "script"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "A"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB": {
+			"type": "string",
+			"defaultValue": "trigger.csv"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ftpServer')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FtpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false,
+									"useBinaryTransfer": true,
+									"disableChunking": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DelimitedText3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DelimitedText4",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://aa",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": "a"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-05-09T08:02:03Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FORsinkIncrementalLoad')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dynConnSqlServerDB",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": {
+							"value": "@dataset().dbNameDatasets",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"dbNameDatasets": {
+						"type": "string"
+					},
+					"schemaNamedataset": {
+						"type": "string"
+					},
+					"tblNamedataset": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "IncrementalLoa"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schemaNamedataset",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tblNamedataset",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SinkSqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SinkSqlServer2",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"TanleName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": {
+						"value": "@dataset().TanleName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceSqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlServer1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Schema": {
+						"type": "string"
+					},
+					"SourceTable": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().Schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().SourceTable",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dynConnSqlServerDB",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": {
+							"value": "@dataset().dbNameDataset",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"dbNameDataset": {
+						"type": "string"
+					},
+					"SchemaNameDataset": {
+						"type": "string"
+					},
+					"tableNameDataset": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "CopyTablefrom1DBto2DB"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().SchemaNameDataset",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableNameDataset",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dynamciSqlServerDataSet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dynConnSqlServerDB",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": {
+							"value": "@dataset().dbNameDataSetParam",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"TableNameDataSetParam": {
+						"type": "string"
+					},
+					"dbNameDataSetParam": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": {
+						"value": "@dataset().TableNameDataSetParam",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/getLastDateUserADFtblandcontrolTBl')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dynConnSqlServerDB",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": {
+							"value": "@dataset().dbNameDataSet",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"dbNameDataSet": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "IncrementalLoa"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/new')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dynConnSqlServerDB",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": {
+							"value": "@dataset().dbNameDataset",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"dbNameDataset": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "CopyTablefrom1DBto2DB"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopySelectiveColumnsAndtable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "select * from lookupazure\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "new",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataset": {
+										"value": "@pipeline().parameters.dbname1",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "SqlServerSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "SqlServerSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate"
+										},
+										"enableStaging": false,
+										"translator": {
+											"value": "@json(item().jsonSchema)",
+											"type": "Expression"
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "SqlServerTable1",
+											"type": "DatasetReference",
+											"parameters": {
+												"dbNameDataset": {
+													"value": "@pipeline().parameters.dbname1",
+													"type": "Expression"
+												},
+												"SchemaNameDataset": "dbo",
+												"tableNameDataset": {
+													"value": "@item().Table_Name",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "SqlServerTable1",
+											"type": "DatasetReference",
+											"parameters": {
+												"dbNameDataset": {
+													"value": "@pipeline().parameters.dbname2",
+													"type": "Expression"
+												},
+												"SchemaNameDataset": "dbo",
+												"tableNameDataset": {
+													"value": "@item().Table_Name",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"dbname1": {
+						"type": "string"
+					},
+					"dbname2": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-26T11:44:06Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/new')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopycsvToSQLDB')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "copyDBtoBlobinCSV",
+								"type": "DatasetReference",
+								"parameters": {
+									"csvfileNameDataSetParam": {
+										"value": "@pipeline().parameters.csvFileName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataset": "CopyofScript",
+									"SchemaNameDataset": "dbo",
+									"tableNameDataset": "csvtoSQLDB"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"csvFileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-29T12:44:33Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyfromSqlDBtoCVS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "dynamciSqlServerDataSet",
+								"type": "DatasetReference",
+								"parameters": {
+									"TableNameDataSetParam": {
+										"value": "@pipeline().parameters.SourceTableName",
+										"type": "Expression"
+									},
+									"dbNameDataSetParam": {
+										"value": "@pipeline().parameters.SourceDBName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "copyDBtoBlobinCSV",
+								"type": "DatasetReference",
+								"parameters": {
+									"csvfileNameDataSetParam": {
+										"value": "@pipeline().parameters.csvFileNameINBLOB",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"SourceDBName": {
+						"type": "string"
+					},
+					"SourceTableName": {
+						"type": "string"
+					},
+					"csvFileNameINBLOB": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-25T11:10:02Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/dynamciSqlServerDataSet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyfromSqlDBtoparquet')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "dynamciSqlServerDataSet",
+								"type": "DatasetReference",
+								"parameters": {
+									"TableNameDataSetParam": {
+										"value": "@pipeline().parameters.TableNameParam",
+										"type": "Expression"
+									},
+									"dbNameDataSetParam": {
+										"value": "@pipeline().parameters.dbNameParam",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "copyDBtabletoBlobinPARQUET",
+								"type": "DatasetReference",
+								"parameters": {
+									"fileNametobeSavedInBlob": {
+										"value": "@pipeline().parameters.fileNameBLOB",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"TableNameParam": {
+						"type": "string"
+					},
+					"dbNameParam": {
+						"type": "string"
+					},
+					"fileNameBLOB": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-23T12:11:17Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/dynamciSqlServerDataSet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/IncrementalLoad')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "lastInsertedDataDate",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "select max(last_modified) as lastInserted from usersADF",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "getLastDateUserADFtblandcontrolTBl",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataSet": {
+										"value": "@pipeline().parameters.dbName",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "last_mDateOFTblControl",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "select last_load from tblControlADF",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "getLastDateUserADFtblandcontrolTBl",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataSet": {
+										"value": "@pipeline().parameters.dbName",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "last_mDateOFTblControl",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "lastInsertedDataDate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from usersADF where \nlast_modified <= '@{activity('lastInsertedDataDate').output.firstRow.lastInserted}' \nand last_modified > '@{activity('last_mDateOFTblControl').output.firstRow.last_load}'",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "getLastDateUserADFtblandcontrolTBl",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataSet": {
+										"value": "@pipeline().parameters.dbName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "FORsinkIncrementalLoad",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDatasets": {
+										"value": "@pipeline().parameters.dbName2",
+										"type": "Expression"
+									},
+									"schemaNamedataset": {
+										"value": "@pipeline().parameters.SchemaName",
+										"type": "Expression"
+									},
+									"tblNamedataset": {
+										"value": "@pipeline().parameters.tableName2",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Stored procedure1",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": {
+								"value": "@pipeline().parameters.spName",
+								"type": "Expression"
+							},
+							"storedProcedureParameters": {
+								"newLoadDate": {
+									"value": {
+										"value": "@activity('lastInsertedDataDate').output.firstRow.lastInserted",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"tblName": {
+									"value": "users",
+									"type": "String"
+								},
+								"updateTable": {
+									"value": "tblControlADF",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "dynConnSqlServerDB",
+							"type": "LinkedServiceReference",
+							"parameters": {
+								"DBName": {
+									"value": "@pipeline().parameters.dbName",
+									"type": "Expression"
+								}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"dbName": {
+						"type": "string"
+					},
+					"SchemaName": {
+						"type": "string"
+					},
+					"tablNAme": {
+						"type": "string"
+					},
+					"dbName2": {
+						"type": "string"
+					},
+					"tableName2": {
+						"type": "string"
+					},
+					"spName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-29T06:16:22Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/getLastDateUserADFtblandcontrolTBl')]",
+				"[concat(variables('factoryId'), '/datasets/FORsinkIncrementalLoad')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/UpsertLoad')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataset": {
+										"value": "@pipeline().parameters.dbName",
+										"type": "Expression"
+									},
+									"SchemaNameDataset": {
+										"value": "@pipeline().parameters.schemaName",
+										"type": "Expression"
+									},
+									"tableNameDataset": {
+										"value": "@pipeline().parameters.tblName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataset": {
+										"value": "@pipeline().parameters.dbName",
+										"type": "Expression"
+									},
+									"SchemaNameDataset": {
+										"value": "@pipeline().parameters.schemaName",
+										"type": "Expression"
+									},
+									"tableNameDataset": {
+										"value": "@pipeline().parameters.tblName2",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"dbName": {
+						"type": "string"
+					},
+					"schemaName": {
+						"type": "string"
+					},
+					"tblName": {
+						"type": "string"
+					},
+					"tblName2": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-29T12:38:43Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copyDatato1DBto2DB')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' ",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "new",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataset": {
+										"value": "@pipeline().parameters.dbName1",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "SqlServerSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "SqlServerSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate"
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "SqlServerTable1",
+											"type": "DatasetReference",
+											"parameters": {
+												"dbNameDataset": {
+													"value": "@pipeline().parameters.dbName1",
+													"type": "Expression"
+												},
+												"SchemaNameDataset": {
+													"value": "@item().Table_Schema",
+													"type": "Expression"
+												},
+												"tableNameDataset": {
+													"value": "@item().Table_Name",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "SqlServerTable1",
+											"type": "DatasetReference",
+											"parameters": {
+												"dbNameDataset": {
+													"value": "@pipeline().parameters.dbName2",
+													"type": "Expression"
+												},
+												"SchemaNameDataset": {
+													"value": "@item().Table_Schema",
+													"type": "Expression"
+												},
+												"tableNameDataset": {
+													"value": "@item().Table_Name",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"dbName1": {
+						"type": "string"
+					},
+					"dbName2": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-25T11:10:02Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/new')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copyfromSQLtoAzureSQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {
+									"dbNameDataset": {
+										"value": "@pipeline().parameters.dbName",
+										"type": "Expression"
+									},
+									"SchemaNameDataset": {
+										"value": "@pipeline().parameters.SchemaName",
+										"type": "Expression"
+									},
+									"tableNameDataset": {
+										"value": "@pipeline().parameters.TableName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference",
+								"parameters": {
+									"SchemaNameDataset": {
+										"value": "@pipeline().parameters.SchemaName",
+										"type": "Expression"
+									},
+									"TableNameDataSet": {
+										"value": "@pipeline().parameters.TableName",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"dbName": {
+						"type": "string"
+					},
+					"SchemaName": {
+						"type": "string"
+					},
+					"TableName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-27T12:33:06Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/event based trigg')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "event pipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"filePath": "[parameters('event based trigg_properties_event pipeline_parameters_filePath')]",
+							"fileName": "[parameters('event based trigg_properties_event pipeline_parameters_fileName')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/adfdemo/blobs/testingFolder/",
+					"blobPathEndsWith": ".txt",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('event based trigg_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AutomateIncrementalPipelineDailyBasisc')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Automate Incremental Pipeline Daily Basisc",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "IncrementalLoad",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"dbName": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName')]",
+							"SchemaName": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_SchemaName')]",
+							"tablNAme": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tablNAme')]",
+							"dbName2": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName2')]",
+							"tableName2": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tableName2')]",
+							"spName": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-04-29T06:09:00",
+						"endTime": "2022-05-01T06:09:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								55
+							],
+							"hours": [
+								11
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/IncrementalLoad')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LastSatofMonth')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Last Saturday of Month triggered",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "IncrementalLoad",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"dbName": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName')]",
+							"SchemaName": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName')]",
+							"tablNAme": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme')]",
+							"dbName2": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName2')]",
+							"tableName2": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tableName2')]",
+							"spName": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_spName')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2022-04-29T09:00:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								7
+							],
+							"monthlyOccurrences": [
+								{
+									"day": "Saturday",
+									"occurrence": -1
+								}
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/IncrementalLoad')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ScheduleTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Schedule trigger for copy data activity CSV \nTask 2 of ADF 100",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "CopyfromSqlDBtoCVS",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceDBName": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName')]",
+							"SourceTableName": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName')]",
+							"csvFileNameINBLOB": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-04-25T13:37:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/CopyfromSqlDBtoCVS')]"
+			]
+		}
+	]
+}

@@ -1,0 +1,300 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "onedatafactoryADF"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"FtpServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FtpServer1'"
+		},
+		"SinkSqlServer2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SinkSqlServer2'"
+		},
+		"SinkSqlServer2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SinkSqlServer2'"
+		},
+		"SqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
+		},
+		"SqlServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer1'"
+		},
+		"dynConnSqlServerDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'dynConnSqlServerDB'"
+		},
+		"dynConnSqlServerDB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'dynConnSqlServerDB'"
+		},
+		"testingAzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'testingAzureBlobStorage1'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://vadlsstorageaccount.dfs.core.windows.net"
+		},
+		"FtpServer1_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "ftp://ftp.dlptest.com/"
+		},
+		"FtpServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dlpuser"
+		},
+		"SinkSqlServer2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "VISHAL\\HP"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "VISHAL\\HP"
+		},
+		"dynConnSqlServerDB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "VISHAL\\HP"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName": {
+			"type": "string",
+			"defaultValue": "script"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_SchemaName": {
+			"type": "string",
+			"defaultValue": "dbo"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tablNAme": {
+			"type": "string",
+			"defaultValue": "usersADF"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName2": {
+			"type": "string",
+			"defaultValue": "CopyofScript"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tableName2": {
+			"type": "string",
+			"defaultValue": "usersADF2"
+		},
+		"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName": {
+			"type": "string",
+			"defaultValue": "UPDATE_tblControlADF"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_dbName": {
+			"type": "string",
+			"defaultValue": "script"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName": {
+			"type": "string",
+			"defaultValue": "dbo"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme": {
+			"type": "string",
+			"defaultValue": "usersADF"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_dbName2": {
+			"type": "string",
+			"defaultValue": "CopyofScript"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_tableName2": {
+			"type": "string",
+			"defaultValue": "usersADF2"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
+			"type": "string",
+			"defaultValue": "UPDATE_tblControlADF"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
+			"type": "string",
+			"defaultValue": "script"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "A"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB": {
+			"type": "string",
+			"defaultValue": "trigger.csv"
+		},
+		"event based trigg_properties_event pipeline_parameters_filePath": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"event based trigg_properties_event pipeline_parameters_fileName": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"event based trigg_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "onedatafactoryADF_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
+					},
+					"FtpServer1_password": {
+						"value": "[parameters('FtpServer1_password')]"
+					},
+					"testingAzureBlobStorage1_connectionString": {
+						"value": "[parameters('testingAzureBlobStorage1_connectionString')]"
+					},
+					"SinkSqlServer2_connectionString": {
+						"value": "[parameters('SinkSqlServer2_connectionString')]"
+					},
+					"SinkSqlServer2_password": {
+						"value": "[parameters('SinkSqlServer2_password')]"
+					},
+					"SqlServer1_connectionString": {
+						"value": "[parameters('SqlServer1_connectionString')]"
+					},
+					"SqlServer1_password": {
+						"value": "[parameters('SqlServer1_password')]"
+					},
+					"dynConnSqlServerDB_connectionString": {
+						"value": "[parameters('dynConnSqlServerDB_connectionString')]"
+					},
+					"dynConnSqlServerDB_password": {
+						"value": "[parameters('dynConnSqlServerDB_password')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"FtpServer1_properties_typeProperties_host": {
+						"value": "[parameters('FtpServer1_properties_typeProperties_host')]"
+					},
+					"FtpServer1_properties_typeProperties_userName": {
+						"value": "[parameters('FtpServer1_properties_typeProperties_userName')]"
+					},
+					"SinkSqlServer2_properties_typeProperties_userName": {
+						"value": "[parameters('SinkSqlServer2_properties_typeProperties_userName')]"
+					},
+					"SqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+					},
+					"dynConnSqlServerDB_properties_typeProperties_userName": {
+						"value": "[parameters('dynConnSqlServerDB_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "onedatafactoryADF_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"event based trigg_properties_event pipeline_parameters_filePath": {
+						"value": "[parameters('event based trigg_properties_event pipeline_parameters_filePath')]"
+					},
+					"event based trigg_properties_event pipeline_parameters_fileName": {
+						"value": "[parameters('event based trigg_properties_event pipeline_parameters_fileName')]"
+					},
+					"event based trigg_properties_typeProperties_scope": {
+						"value": "[parameters('event based trigg_properties_typeProperties_scope')]"
+					},
+					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName": {
+						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName')]"
+					},
+					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_SchemaName": {
+						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_SchemaName')]"
+					},
+					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tablNAme": {
+						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tablNAme')]"
+					},
+					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName2": {
+						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_dbName2')]"
+					},
+					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tableName2": {
+						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_tableName2')]"
+					},
+					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName": {
+						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_dbName": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_dbName2": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName2')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_tableName2": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tableName2')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_spName')]"
+					},
+					"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
+						"value": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName')]"
+					},
+					"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName": {
+						"value": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName')]"
+					},
+					"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB": {
+						"value": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_0')]"
+			]
+		}
+	]
+}
