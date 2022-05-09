@@ -1,0 +1,40 @@
+{
+	"name": "globalForCSV5",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "testingAzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"rootFileNmaeDataset": {
+				"type": "string"
+			},
+			"FileNameDataset": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Global"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().FileNameDataset",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().rootFileNmaeDataset",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
