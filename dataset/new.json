@@ -1,0 +1,27 @@
+{
+	"name": "new",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dynConnSqlServerDB",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": {
+					"value": "@dataset().dbNameDataset",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"dbNameDataset": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "CopyTablefrom1DBto2DB"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

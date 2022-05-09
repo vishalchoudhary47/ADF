@@ -1,0 +1,7 @@
+{
+	"name": "SelfHostedintegrationRuntime1",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "cretae a runtime Sele hosted"
+	}
+}

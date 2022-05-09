@@ -1,0 +1,9 @@
+{
+	"name": "onedatafactoryADF",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "adb00cd4-2dc8-4770-a42e-9a664ec6d050",
+		"tenantId": "e4e34038-ea1f-4882-b6e8-ccd776459ca0"
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"name": "dynConnSqlServerDB",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "dynamic Connection to SQL Server DB",
+		"parameters": {
+			"DBName": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=VISHAL\\SQLEXPRESS;initial catalog=@{linkedService().DBName}",
+			"userName": "VISHAL\\HP",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyYWNmMzUwNi0yMGFkLTRjYjQtYTIwNS01NjA5NWQ0ZGEzZmEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SelfHostedintegrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

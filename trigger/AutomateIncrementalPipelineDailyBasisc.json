@@ -1,0 +1,42 @@
+{
+	"name": "AutomateIncrementalPipelineDailyBasisc",
+	"properties": {
+		"description": "Automate Incremental Pipeline Daily Basisc",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "IncrementalLoad",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"dbName": "script",
+					"SchemaName": "dbo",
+					"tablNAme": "usersADF",
+					"dbName2": "CopyofScript",
+					"tableName2": "usersADF2",
+					"spName": "UPDATE_tblControlADF"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2022-04-29T06:09:00",
+				"endTime": "2022-05-01T06:09:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"minutes": [
+						55
+					],
+					"hours": [
+						11
+					]
+				}
+			}
+		}
+	}
+}

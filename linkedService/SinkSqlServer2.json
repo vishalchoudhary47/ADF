@@ -1,0 +1,18 @@
+{
+	"name": "SinkSqlServer2",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "sink ",
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=VISHAL\\SQLEXPRESS;initial catalog=CopyofScript",
+			"userName": "VISHAL\\HP",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI2Y2IxMjBkNC0yNDliLTRlODctYmYwNy03ZWRjYzRmNjFlN2IiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SelfHostedintegrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

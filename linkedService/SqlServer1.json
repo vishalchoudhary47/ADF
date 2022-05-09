@@ -1,0 +1,18 @@
+{
+	"name": "SqlServer1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "SQL ServerOn premise Data Base",
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=VISHAL\\SQLEXPRESS;initial catalog=script",
+			"userName": "VISHAL\\HP",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4NTVmODRhZS05NGE0LTRhMDQtODNmZi0yYTE4NWJhNTkwMzgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SelfHostedintegrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

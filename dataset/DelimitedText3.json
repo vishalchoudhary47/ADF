@@ -1,0 +1,67 @@
+{
+	"name": "DelimitedText3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FtpServer1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "FTP"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FtpServerLocation",
+				"fileName": "HeartbeatData_af66.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "2022/05/04 18:09:08",
+				"type": "String"
+			},
+			{
+				"name": "5",
+				"type": "String"
+			},
+			{
+				"name": "14.5",
+				"type": "String"
+			},
+			{
+				"name": "11.4879",
+				"type": "String"
+			},
+			{
+				"name": "233",
+				"type": "String"
+			},
+			{
+				"name": "31.965",
+				"type": "String"
+			},
+			{
+				"name": "30.74",
+				"type": "String"
+			},
+			{
+				"name": "100494.311",
+				"type": "String"
+			},
+			{
+				"name": "184205.31",
+				"type": "String"
+			},
+			{
+				"name": "WIFI",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

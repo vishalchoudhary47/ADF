@@ -1,0 +1,87 @@
+{
+	"name": "CopyfromSqlDBtoparquet",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "dynamciSqlServerDataSet",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableNameDataSetParam": {
+								"value": "@pipeline().parameters.TableNameParam",
+								"type": "Expression"
+							},
+							"dbNameDataSetParam": {
+								"value": "@pipeline().parameters.dbNameParam",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "copyDBtabletoBlobinPARQUET",
+						"type": "DatasetReference",
+						"parameters": {
+							"fileNametobeSavedInBlob": {
+								"value": "@pipeline().parameters.fileNameBLOB",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"TableNameParam": {
+				"type": "string"
+			},
+			"dbNameParam": {
+				"type": "string"
+			},
+			"fileNameBLOB": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-04-23T12:11:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

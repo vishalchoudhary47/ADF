@@ -1,0 +1,43 @@
+{
+	"name": "FORsinkIncrementalLoad",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dynConnSqlServerDB",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": {
+					"value": "@dataset().dbNameDatasets",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"dbNameDatasets": {
+				"type": "string"
+			},
+			"schemaNamedataset": {
+				"type": "string"
+			},
+			"tblNamedataset": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "IncrementalLoa"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schemaNamedataset",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tblNamedataset",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

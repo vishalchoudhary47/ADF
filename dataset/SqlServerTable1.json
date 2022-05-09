@@ -1,0 +1,43 @@
+{
+	"name": "SqlServerTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dynConnSqlServerDB",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": {
+					"value": "@dataset().dbNameDataset",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"dbNameDataset": {
+				"type": "string"
+			},
+			"SchemaNameDataset": {
+				"type": "string"
+			},
+			"tableNameDataset": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "CopyTablefrom1DBto2DB"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().SchemaNameDataset",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tableNameDataset",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

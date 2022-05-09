@@ -1,0 +1,30 @@
+{
+	"name": "ScheduleTrigger",
+	"properties": {
+		"description": "Schedule trigger for copy data activity CSV \nTask 2 of ADF 100",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyfromSqlDBtoCVS",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceDBName": "script",
+					"SourceTableName": "A",
+					"csvFileNameINBLOB": "trigger.csv"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2022-04-25T13:37:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

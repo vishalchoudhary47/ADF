@@ -1,0 +1,31 @@
+{
+	"name": "SourceBinary1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "testingAzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"fileNameDataSet": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "EventPipline"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().fileNameDataSet",
+					"type": "Expression"
+				},
+				"folderPath": "testingFolder",
+				"container": "adfdemo"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

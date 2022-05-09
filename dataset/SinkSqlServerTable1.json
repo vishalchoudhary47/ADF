@@ -1,0 +1,25 @@
+{
+	"name": "SinkSqlServerTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SinkSqlServer2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TanleName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().TanleName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

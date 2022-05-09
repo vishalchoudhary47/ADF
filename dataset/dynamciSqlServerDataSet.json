@@ -1,0 +1,34 @@
+{
+	"name": "dynamciSqlServerDataSet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dynConnSqlServerDB",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": {
+					"value": "@dataset().dbNameDataSetParam",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"TableNameDataSetParam": {
+				"type": "string"
+			},
+			"dbNameDataSetParam": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().TableNameDataSetParam",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,47 @@
+{
+	"name": "LastSatofMonth",
+	"properties": {
+		"description": "Last Saturday of Month triggered",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "IncrementalLoad",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"dbName": "script",
+					"SchemaName": "dbo",
+					"tablNAme": "usersADF",
+					"dbName2": "CopyofScript",
+					"tableName2": "usersADF2",
+					"spName": "UPDATE_tblControlADF"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Month",
+				"interval": 1,
+				"startTime": "2022-04-29T09:00:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						7
+					],
+					"monthlyOccurrences": [
+						{
+							"day": "Saturday",
+							"occurrence": -1
+						}
+					]
+				}
+			}
+		}
+	}
+}
