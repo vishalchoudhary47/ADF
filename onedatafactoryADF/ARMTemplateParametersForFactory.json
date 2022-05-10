@@ -14,6 +14,9 @@
 		"FtpServer1_password": {
 			"value": ""
 		},
+		"SapTable1_password": {
+			"value": ""
+		},
 		"SinkSqlServer2_connectionString": {
 			"value": ""
 		},
@@ -43,6 +46,18 @@
 		},
 		"FtpServer1_properties_typeProperties_userName": {
 			"value": "dlpuser"
+		},
+		"SapTable1_properties_typeProperties_clientId": {
+			"value": "100"
+		},
+		"SapTable1_properties_typeProperties_userName": {
+			"value": "kjoshi"
+		},
+		"SapTable1_properties_typeProperties_server": {
+			"value": "fas.cognitusconsulting.com"
+		},
+		"SapTable1_properties_typeProperties_systemNumber": {
+			"value": "01"
 		},
 		"SinkSqlServer2_properties_typeProperties_userName": {
 			"value": "VISHAL\\HP"
