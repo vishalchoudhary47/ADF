@@ -1,0 +1,34 @@
+{
+	"name": "SaveWebOutput",
+	"properties": {
+		"description": "Saving Web Output",
+		"linkedServiceName": {
+			"referenceName": "testingAzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ForWebActivity"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "WebOuput",
+				"folderPath": "testingFolder",
+				"container": "adfdemo"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "",
+			"quoteChar": ""
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}

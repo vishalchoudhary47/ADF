@@ -1,0 +1,31 @@
+{
+	"name": "gettemplateFile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "testingAzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ForWebActivity"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "template.csv",
+				"container": "adfdemo"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "template",
+				"type": "String"
+			}
+		]
+	}
+}
