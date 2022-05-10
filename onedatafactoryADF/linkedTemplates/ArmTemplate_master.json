@@ -19,10 +19,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'FtpServer1'"
 		},
-		"SapTable1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SapTable1'"
-		},
 		"SinkSqlServer2_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SinkSqlServer2'"
@@ -62,22 +58,6 @@
 		"FtpServer1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "dlpuser"
-		},
-		"SapTable1_properties_typeProperties_clientId": {
-			"type": "string",
-			"defaultValue": "100"
-		},
-		"SapTable1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "kjoshi"
-		},
-		"SapTable1_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "fas.cognitusconsulting.com"
-		},
-		"SapTable1_properties_typeProperties_systemNumber": {
-			"type": "string",
-			"defaultValue": "01"
 		},
 		"SinkSqlServer2_properties_typeProperties_userName": {
 			"type": "string",
@@ -202,48 +182,6 @@
 					"testingAzureBlobStorage1_connectionString": {
 						"value": "[parameters('testingAzureBlobStorage1_connectionString')]"
 					},
-					"SapTable1_password": {
-						"value": "[parameters('SapTable1_password')]"
-					},
-					"AzureDataLakeStorage1_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
-					},
-					"FtpServer1_properties_typeProperties_host": {
-						"value": "[parameters('FtpServer1_properties_typeProperties_host')]"
-					},
-					"FtpServer1_properties_typeProperties_userName": {
-						"value": "[parameters('FtpServer1_properties_typeProperties_userName')]"
-					},
-					"SapTable1_properties_typeProperties_clientId": {
-						"value": "[parameters('SapTable1_properties_typeProperties_clientId')]"
-					},
-					"SapTable1_properties_typeProperties_userName": {
-						"value": "[parameters('SapTable1_properties_typeProperties_userName')]"
-					},
-					"SapTable1_properties_typeProperties_server": {
-						"value": "[parameters('SapTable1_properties_typeProperties_server')]"
-					},
-					"SapTable1_properties_typeProperties_systemNumber": {
-						"value": "[parameters('SapTable1_properties_typeProperties_systemNumber')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "onedatafactoryADF_ArmTemplate_1",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					},
 					"SinkSqlServer2_connectionString": {
 						"value": "[parameters('SinkSqlServer2_connectionString')]"
 					},
@@ -262,6 +200,15 @@
 					"dynConnSqlServerDB_password": {
 						"value": "[parameters('dynConnSqlServerDB_password')]"
 					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"FtpServer1_properties_typeProperties_host": {
+						"value": "[parameters('FtpServer1_properties_typeProperties_host')]"
+					},
+					"FtpServer1_properties_typeProperties_userName": {
+						"value": "[parameters('FtpServer1_properties_typeProperties_userName')]"
+					},
 					"SinkSqlServer2_properties_typeProperties_userName": {
 						"value": "[parameters('SinkSqlServer2_properties_typeProperties_userName')]"
 					},
@@ -273,18 +220,16 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_0')]"
-			]
+			"dependsOn": []
 		},
 		{
-			"name": "onedatafactoryADF_ArmTemplate_2",
+			"name": "onedatafactoryADF_ArmTemplate_1",
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2018-02-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -348,7 +293,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_1')]"
+				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_0')]"
 			]
 		}
 	]
