@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FtpServerLocation",
-				"fileName": "HeartbeatData_af66.csv"
+				"fileName": "HeartbeatDatassss_af66.csv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
