@@ -1,0 +1,26 @@
+{
+	"name": "SapTableResource1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SapTable1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TablenameDataSet": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "SAPDataSets"
+		},
+		"annotations": [],
+		"type": "SapTableResource",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().TablenameDataSet",
+				"type": "Expression"
+			}
+		}
+	}
+}
