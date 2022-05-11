@@ -27,14 +27,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SapTable1'"
 		},
-		"SinkSqlServer2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SinkSqlServer2'"
-		},
-		"SinkSqlServer2_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SinkSqlServer2'"
-		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://vadlsstorageaccount.dfs.core.windows.net"
@@ -46,6 +38,10 @@
 		"FtpServer1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "dlpuser"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://dummy.restapiexample.com/api/v1/employees"
 		},
 		"SapTable1_properties_typeProperties_clientId": {
 			"type": "string",
@@ -62,10 +58,6 @@
 		"SapTable1_properties_typeProperties_systemNumber": {
 			"type": "string",
 			"defaultValue": "01"
-		},
-		"SinkSqlServer2_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "VISHAL\\HP"
 		}
 	},
 	"variables": {
@@ -146,6 +138,22 @@
 				"type": "SelfHosted",
 				"description": "cretae a runtime Sele hosted",
 				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestService1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Creating rest api for -- Create a pipeline to load the data from the given API to On-prem SQL Server",
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestService1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
 			},
 			"dependsOn": []
 		},
@@ -691,31 +699,6 @@
 					},
 					"server": "[parameters('SapTable1_properties_typeProperties_server')]",
 					"systemNumber": "[parameters('SapTable1_properties_typeProperties_systemNumber')]"
-				},
-				"connectVia": {
-					"referenceName": "SelfHostedintegrationRuntime1",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/SelfHostedintegrationRuntime1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SinkSqlServer2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "sink ",
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SinkSqlServer2_connectionString')]",
-					"userName": "[parameters('SinkSqlServer2_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SinkSqlServer2_password')]"
-					}
 				},
 				"connectVia": {
 					"referenceName": "SelfHostedintegrationRuntime1",

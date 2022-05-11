@@ -163,6 +163,10 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
 		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://dummy.restapiexample.com/api/v1/employees"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -205,12 +209,6 @@
 					"SapTable1_password": {
 						"value": "[parameters('SapTable1_password')]"
 					},
-					"SinkSqlServer2_connectionString": {
-						"value": "[parameters('SinkSqlServer2_connectionString')]"
-					},
-					"SinkSqlServer2_password": {
-						"value": "[parameters('SinkSqlServer2_password')]"
-					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -219,6 +217,9 @@
 					},
 					"FtpServer1_properties_typeProperties_userName": {
 						"value": "[parameters('FtpServer1_properties_typeProperties_userName')]"
+					},
+					"RestService1_properties_typeProperties_url": {
+						"value": "[parameters('RestService1_properties_typeProperties_url')]"
 					},
 					"SapTable1_properties_typeProperties_clientId": {
 						"value": "[parameters('SapTable1_properties_typeProperties_clientId')]"
@@ -231,9 +232,6 @@
 					},
 					"SapTable1_properties_typeProperties_systemNumber": {
 						"value": "[parameters('SapTable1_properties_typeProperties_systemNumber')]"
-					},
-					"SinkSqlServer2_properties_typeProperties_userName": {
-						"value": "[parameters('SinkSqlServer2_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -253,6 +251,12 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"SinkSqlServer2_connectionString": {
+						"value": "[parameters('SinkSqlServer2_connectionString')]"
+					},
+					"SinkSqlServer2_password": {
+						"value": "[parameters('SinkSqlServer2_password')]"
+					},
 					"SqlServer1_connectionString": {
 						"value": "[parameters('SqlServer1_connectionString')]"
 					},
@@ -264,6 +268,9 @@
 					},
 					"dynConnSqlServerDB_password": {
 						"value": "[parameters('dynConnSqlServerDB_password')]"
+					},
+					"SinkSqlServer2_properties_typeProperties_userName": {
+						"value": "[parameters('SinkSqlServer2_properties_typeProperties_userName')]"
 					},
 					"SqlServer1_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
