@@ -1,0 +1,26 @@
+{
+	"name": "SapTableResource2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SapTable1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SapTableName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ADFTaskQ4"
+		},
+		"annotations": [],
+		"type": "SapTableResource",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().SapTableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
