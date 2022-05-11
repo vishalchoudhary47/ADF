@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "api2OnPremSqlServer",
 	"properties": {
 		"activities": [
 			{
