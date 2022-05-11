@@ -5,7 +5,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -45,10 +52,7 @@
 						"referenceName": "SapTableResource2",
 						"type": "DatasetReference",
 						"parameters": {
-							"SapTableName": {
-								"value": "@pipeline().parameters.SapTableName",
-								"type": "Expression"
-							}
+							"SapTableName": "VBRK"
 						}
 					}
 				],
@@ -130,12 +134,66 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"TanleName": {
-								"value": "@{pipeline().parameters.SapTableName}_101",
+								"value": "@{pipeline().parameters.SapTableName}_@{variables('DateVar')}",
 								"type": "Expression"
 							}
 						}
 					}
 				]
+			},
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "SinkSqlServer2",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"parameters": [
+								{
+									"name": "getDate",
+									"type": "String",
+									"value": "",
+									"direction": "Output",
+									"size": "10"
+								}
+							],
+							"type": "Query",
+							"text": "select top 1 @getDate = ERDAT  from VBRK;"
+						}
+					]
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Script1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "DateVar",
+					"value": {
+						"value": "@activity('Script1').output.outputParameters.getDate",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -144,6 +202,11 @@
 			},
 			"SchemaName": {
 				"type": "string"
+			}
+		},
+		"variables": {
+			"DateVar": {
+				"type": "String"
 			}
 		},
 		"annotations": []
