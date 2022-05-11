@@ -57,8 +57,8 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Delete1",
-							"type": "Delete",
+							"name": "Script1",
+							"type": "Script",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
@@ -68,8 +68,20 @@
 								"secureInput": false
 							},
 							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "SinkSqlServer2",
+								"type": "LinkedServiceReference"
+							},
 							"typeProperties": {
-								"enableLogging": true
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "drop table @{item().DestinationTableName}",
+											"type": "Expression"
+										}
+									}
+								]
 							}
 						}
 					]
