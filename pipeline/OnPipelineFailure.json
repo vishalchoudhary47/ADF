@@ -88,8 +88,8 @@
 						"Content-Type": "application/json"
 					},
 					"body": {
-						"Pipeline": "MyPipeline",
-						"ErrorMessage": "Has an Error"
+						"value": "{\n    \"Pipeline\": \"@{pipeline().Pipeline}\",\n    \"ErrorMessage\": \"pipeline failsed\"\n}",
+						"type": "Expression"
 					}
 				}
 			}
