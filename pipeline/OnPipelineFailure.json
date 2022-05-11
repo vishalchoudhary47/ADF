@@ -1,5 +1,5 @@
 {
-	"name": "ftpServer",
+	"name": "OnPipelineFailure",
 	"properties": {
 		"activities": [
 			{
