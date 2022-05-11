@@ -63,6 +63,10 @@
 			"type": "string",
 			"defaultValue": "dlpuser"
 		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://dummy.restapiexample.com/api/v1/employees"
+		},
 		"SapTable1_properties_typeProperties_clientId": {
 			"type": "string",
 			"defaultValue": "100"
@@ -163,10 +167,6 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
 		},
-		"RestService1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "http://dummy.restapiexample.com/api/v1/employees"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -206,9 +206,6 @@
 					"testingAzureBlobStorage1_connectionString": {
 						"value": "[parameters('testingAzureBlobStorage1_connectionString')]"
 					},
-					"SapTable1_password": {
-						"value": "[parameters('SapTable1_password')]"
-					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -220,18 +217,6 @@
 					},
 					"RestService1_properties_typeProperties_url": {
 						"value": "[parameters('RestService1_properties_typeProperties_url')]"
-					},
-					"SapTable1_properties_typeProperties_clientId": {
-						"value": "[parameters('SapTable1_properties_typeProperties_clientId')]"
-					},
-					"SapTable1_properties_typeProperties_userName": {
-						"value": "[parameters('SapTable1_properties_typeProperties_userName')]"
-					},
-					"SapTable1_properties_typeProperties_server": {
-						"value": "[parameters('SapTable1_properties_typeProperties_server')]"
-					},
-					"SapTable1_properties_typeProperties_systemNumber": {
-						"value": "[parameters('SapTable1_properties_typeProperties_systemNumber')]"
 					}
 				}
 			},
@@ -251,6 +236,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"SapTable1_password": {
+						"value": "[parameters('SapTable1_password')]"
+					},
 					"SinkSqlServer2_connectionString": {
 						"value": "[parameters('SinkSqlServer2_connectionString')]"
 					},
@@ -268,6 +256,18 @@
 					},
 					"dynConnSqlServerDB_password": {
 						"value": "[parameters('dynConnSqlServerDB_password')]"
+					},
+					"SapTable1_properties_typeProperties_clientId": {
+						"value": "[parameters('SapTable1_properties_typeProperties_clientId')]"
+					},
+					"SapTable1_properties_typeProperties_userName": {
+						"value": "[parameters('SapTable1_properties_typeProperties_userName')]"
+					},
+					"SapTable1_properties_typeProperties_server": {
+						"value": "[parameters('SapTable1_properties_typeProperties_server')]"
+					},
+					"SapTable1_properties_typeProperties_systemNumber": {
+						"value": "[parameters('SapTable1_properties_typeProperties_systemNumber')]"
 					},
 					"SinkSqlServer2_properties_typeProperties_userName": {
 						"value": "[parameters('SinkSqlServer2_properties_typeProperties_userName')]"

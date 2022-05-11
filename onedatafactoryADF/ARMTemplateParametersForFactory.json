@@ -47,6 +47,9 @@
 		"FtpServer1_properties_typeProperties_userName": {
 			"value": "dlpuser"
 		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "http://dummy.restapiexample.com/api/v1/employees"
+		},
 		"SapTable1_properties_typeProperties_clientId": {
 			"value": "100"
 		},
@@ -121,9 +124,6 @@
 		},
 		"event based trigg_properties_typeProperties_scope": {
 			"value": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
-		},
-		"RestService1_properties_typeProperties_url": {
-			"value": "http://dummy.restapiexample.com/api/v1/employees"
 		}
 	}
 }
