@@ -12,6 +12,7 @@
 				},
 				"secretName": "SecretBlobStorageContainerKey"
 			}
-		}
+		},
+		"description": "crate for azure key valut."
 	}
 }
