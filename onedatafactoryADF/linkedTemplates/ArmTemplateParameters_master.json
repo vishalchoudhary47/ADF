@@ -48,7 +48,7 @@
 			"value": "dlpuser"
 		},
 		"RestService1_properties_typeProperties_url": {
-			"value": "http://dummy.restapiexample.com/api/v1/employees"
+			"value": "https://reqres.in/api/products"
 		},
 		"SapTable1_properties_typeProperties_clientId": {
 			"value": "100"
