@@ -167,6 +167,14 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
 		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://MyOneKeyVault.vault.azure.net/"
+		},
+		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "SecretBlobStorageContainerKey"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -217,6 +225,9 @@
 					},
 					"RestService1_properties_typeProperties_url": {
 						"value": "[parameters('RestService1_properties_typeProperties_url')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
 					}
 				}
 			},
@@ -277,6 +288,9 @@
 					},
 					"dynConnSqlServerDB_properties_typeProperties_userName": {
 						"value": "[parameters('dynConnSqlServerDB_properties_typeProperties_userName')]"
+					},
+					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -342,6 +356,26 @@
 					},
 					"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
 						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_spName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "onedatafactoryADF_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
 						"value": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName')]"
@@ -355,7 +389,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_1')]"
+				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_2')]"
 			]
 		}
 	]

@@ -66,24 +66,109 @@
 		"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
 			"type": "string",
 			"defaultValue": "UPDATE_tblControlADF"
-		},
-		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
-			"type": "string",
-			"defaultValue": "script"
-		},
-		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "A"
-		},
-		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB": {
-			"type": "string",
-			"defaultValue": "trigger.csv"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dynConnSqlServerDB",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": {
+							"value": "@dataset().dbNameDataset",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"dbNameDataset": {
+						"type": "string"
+					},
+					"SchemaNameDataset": {
+						"type": "string"
+					},
+					"tableNameDataset": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "CopyTablefrom1DBto2DB"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().SchemaNameDataset",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableNameDataset",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SinkSqlServer2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dynamciSqlServerDataSet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dynConnSqlServerDB",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": {
+							"value": "@dataset().dbNameDataSetParam",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"TableNameDataSetParam": {
+						"type": "string"
+					},
+					"dbNameDataSetParam": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": {
+						"value": "@dataset().TableNameDataSetParam",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/getLastDateUserADFtblandcontrolTBl')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -141,164 +226,6 @@
 				"type": "SqlServerTable",
 				"schema": [],
 				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/api2OnPremSqlServer2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"paginationRules": {
-									"supportRFC5988": "true"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"path": "$['page']"
-										},
-										"sink": {
-											"name": "page"
-										}
-									},
-									{
-										"source": {
-											"path": "$['per_page']"
-										},
-										"sink": {
-											"name": "per_page"
-										}
-									},
-									{
-										"source": {
-											"path": "$['total']"
-										},
-										"sink": {
-											"name": "total"
-										}
-									},
-									{
-										"source": {
-											"path": "$['total_pages']"
-										},
-										"sink": {
-											"name": "total_pages"
-										}
-									},
-									{
-										"source": {
-											"path": "[['id']"
-										},
-										"sink": {
-											"name": "id"
-										}
-									},
-									{
-										"source": {
-											"path": "[['name']"
-										},
-										"sink": {
-											"name": "name"
-										}
-									},
-									{
-										"source": {
-											"path": "[['year']"
-										},
-										"sink": {
-											"name": "year"
-										}
-									},
-									{
-										"source": {
-											"path": "[['color']"
-										},
-										"sink": {
-											"name": "color"
-										}
-									},
-									{
-										"source": {
-											"path": "[['pantone_value']"
-										},
-										"sink": {
-											"name": "pantone_value"
-										}
-									},
-									{
-										"source": {
-											"path": "$['support']['url']"
-										},
-										"sink": {
-											"name": "url"
-										}
-									},
-									{
-										"source": {
-											"path": "$['support']['text']"
-										},
-										"sink": {
-											"name": "text"
-										}
-									}
-								],
-								"collectionReference": "$['data']"
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "RestResource1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {
-									"SchemaNameDataset": "dbo",
-									"TableNameDataSet": "apiData"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
 			},
 			"dependsOn": []
 		},
@@ -444,7 +371,8 @@
 				"lastPublishTime": "2022-04-26T11:44:06Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/new')]"
+				"[concat(variables('factoryId'), '/datasets/new')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
 			]
 		},
 		{
@@ -530,7 +458,9 @@
 				"annotations": [],
 				"lastPublishTime": "2022-04-29T12:44:33Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CopyfromSqlDBtoCVS')]",
@@ -625,7 +555,9 @@
 				"annotations": [],
 				"lastPublishTime": "2022-04-25T11:10:02Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/dynamciSqlServerDataSet')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CopyfromSqlDBtoparquet')]",
@@ -718,7 +650,9 @@
 				"annotations": [],
 				"lastPublishTime": "2022-04-23T12:11:17Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/dynamciSqlServerDataSet')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DeleteCereatedBysap2adls2OnPremisesSql')]",
@@ -1397,7 +1331,9 @@
 				"annotations": [],
 				"lastPublishTime": "2022-04-29T12:38:43Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/copyDatato1DBto2DB')]",
@@ -1551,7 +1487,8 @@
 				"lastPublishTime": "2022-04-25T11:10:02Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/new')]"
+				"[concat(variables('factoryId'), '/datasets/new')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
 			]
 		},
 		{
@@ -1807,7 +1744,9 @@
 				"annotations": [],
 				"lastPublishTime": "2022-04-27T12:33:06Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/sap2adls2OnPremisesSql')]",
@@ -2153,41 +2092,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/IncrementalLoad')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ScheduleTrigger')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Schedule trigger for copy data activity CSV \nTask 2 of ADF 100",
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "CopyfromSqlDBtoCVS",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceDBName": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName')]",
-							"SourceTableName": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName')]",
-							"csvFileNameINBLOB": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2022-04-25T13:37:00",
-						"timeZone": "India Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/CopyfromSqlDBtoCVS')]"
 			]
 		}
 	]

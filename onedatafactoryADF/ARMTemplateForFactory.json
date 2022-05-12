@@ -166,6 +166,14 @@
 		"event based trigg_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://MyOneKeyVault.vault.azure.net/"
+		},
+		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "SecretBlobStorageContainerKey"
 		}
 	},
 	"variables": {
@@ -1681,6 +1689,167 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/api2OnPremSqlServer2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['page']"
+										},
+										"sink": {
+											"name": "page"
+										}
+									},
+									{
+										"source": {
+											"path": "$['per_page']"
+										},
+										"sink": {
+											"name": "per_page"
+										}
+									},
+									{
+										"source": {
+											"path": "$['total']"
+										},
+										"sink": {
+											"name": "total"
+										}
+									},
+									{
+										"source": {
+											"path": "$['total_pages']"
+										},
+										"sink": {
+											"name": "total_pages"
+										}
+									},
+									{
+										"source": {
+											"path": "[['id']"
+										},
+										"sink": {
+											"name": "id"
+										}
+									},
+									{
+										"source": {
+											"path": "[['name']"
+										},
+										"sink": {
+											"name": "name"
+										}
+									},
+									{
+										"source": {
+											"path": "[['year']"
+										},
+										"sink": {
+											"name": "year"
+										}
+									},
+									{
+										"source": {
+											"path": "[['color']"
+										},
+										"sink": {
+											"name": "color"
+										}
+									},
+									{
+										"source": {
+											"path": "[['pantone_value']"
+										},
+										"sink": {
+											"name": "pantone_value"
+										}
+									},
+									{
+										"source": {
+											"path": "$['support']['url']"
+										},
+										"sink": {
+											"name": "url"
+										}
+									},
+									{
+										"source": {
+											"path": "$['support']['text']"
+										},
+										"sink": {
+											"name": "text"
+										}
+									}
+								],
+								"collectionReference": "$['data']"
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "RestResource1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference",
+								"parameters": {
+									"SchemaNameDataset": "dbo",
+									"TableNameDataSet": "apiData"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/RestResource1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		},
@@ -4154,164 +4323,40 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/api2OnPremSqlServer2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+				"description": "azre kv for blob storage in adf ",
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "crate for azure key valut.",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"paginationRules": {
-									"supportRFC5988": "true"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"path": "$['page']"
-										},
-										"sink": {
-											"name": "page"
-										}
-									},
-									{
-										"source": {
-											"path": "$['per_page']"
-										},
-										"sink": {
-											"name": "per_page"
-										}
-									},
-									{
-										"source": {
-											"path": "$['total']"
-										},
-										"sink": {
-											"name": "total"
-										}
-									},
-									{
-										"source": {
-											"path": "$['total_pages']"
-										},
-										"sink": {
-											"name": "total_pages"
-										}
-									},
-									{
-										"source": {
-											"path": "[['id']"
-										},
-										"sink": {
-											"name": "id"
-										}
-									},
-									{
-										"source": {
-											"path": "[['name']"
-										},
-										"sink": {
-											"name": "name"
-										}
-									},
-									{
-										"source": {
-											"path": "[['year']"
-										},
-										"sink": {
-											"name": "year"
-										}
-									},
-									{
-										"source": {
-											"path": "[['color']"
-										},
-										"sink": {
-											"name": "color"
-										}
-									},
-									{
-										"source": {
-											"path": "[['pantone_value']"
-										},
-										"sink": {
-											"name": "pantone_value"
-										}
-									},
-									{
-										"source": {
-											"path": "$['support']['url']"
-										},
-										"sink": {
-											"name": "url"
-										}
-									},
-									{
-										"source": {
-											"path": "$['support']['text']"
-										},
-										"sink": {
-											"name": "text"
-										}
-									}
-								],
-								"collectionReference": "$['data']"
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "RestResource1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {
-									"SchemaNameDataset": "dbo",
-									"TableNameDataSet": "apiData"
-								}
-							}
-						]
+						"secretName": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
 					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/RestResource1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
 			]
 		}
 	]

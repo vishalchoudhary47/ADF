@@ -1,0 +1,61 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "onedatafactoryADF"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
+			"type": "string",
+			"defaultValue": "script"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "A"
+		},
+		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB": {
+			"type": "string",
+			"defaultValue": "trigger.csv"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ScheduleTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Schedule trigger for copy data activity CSV \nTask 2 of ADF 100",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "CopyfromSqlDBtoCVS",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceDBName": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName')]",
+							"SourceTableName": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceTableName')]",
+							"csvFileNameINBLOB": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_csvFileNameINBLOB')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-04-25T13:37:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
