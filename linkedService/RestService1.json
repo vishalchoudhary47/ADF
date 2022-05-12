@@ -5,7 +5,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "http://dummy.restapiexample.com/api/v1/employees",
+			"url": "https://reqres.in/api/products",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
