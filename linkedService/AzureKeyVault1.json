@@ -1,0 +1,11 @@
+{
+	"name": "AzureKeyVault1",
+	"properties": {
+		"description": "azre kv for blob storage in adf ",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://MyOneKeyVault.vault.azure.net/"
+		}
+	}
+}
