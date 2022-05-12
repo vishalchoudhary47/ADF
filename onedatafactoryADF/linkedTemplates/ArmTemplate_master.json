@@ -51,9 +51,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'testingAzureBlobStorage1'"
 		},
+		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "SecretBlobStorageContainerKey"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://vadlsstorageaccount.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://MyOneKeyVault.vault.azure.net/"
 		},
 		"FtpServer1_properties_typeProperties_host": {
 			"type": "string",
@@ -167,14 +175,6 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/15233ae3-69b2-4476-8d52-87a0a5be34fe/resourceGroups/firstresourcegroup/providers/Microsoft.Storage/storageAccounts/myoneaccount"
 		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://MyOneKeyVault.vault.azure.net/"
-		},
-		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "SecretBlobStorageContainerKey"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -217,6 +217,9 @@
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
 					"FtpServer1_properties_typeProperties_host": {
 						"value": "[parameters('FtpServer1_properties_typeProperties_host')]"
 					},
@@ -225,9 +228,6 @@
 					},
 					"RestService1_properties_typeProperties_url": {
 						"value": "[parameters('RestService1_properties_typeProperties_url')]"
-					},
-					"AzureKeyVault1_properties_typeProperties_baseUrl": {
-						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
 					}
 				}
 			},
@@ -268,6 +268,9 @@
 					"dynConnSqlServerDB_password": {
 						"value": "[parameters('dynConnSqlServerDB_password')]"
 					},
+					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
+					},
 					"SapTable1_properties_typeProperties_clientId": {
 						"value": "[parameters('SapTable1_properties_typeProperties_clientId')]"
 					},
@@ -288,9 +291,6 @@
 					},
 					"dynConnSqlServerDB_properties_typeProperties_userName": {
 						"value": "[parameters('dynConnSqlServerDB_properties_typeProperties_userName')]"
-					},
-					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -338,24 +338,6 @@
 					},
 					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName": {
 						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName')]"
-					},
-					"LastSatofMonth_properties_IncrementalLoad_parameters_dbName": {
-						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName')]"
-					},
-					"LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName": {
-						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName')]"
-					},
-					"LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme": {
-						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme')]"
-					},
-					"LastSatofMonth_properties_IncrementalLoad_parameters_dbName2": {
-						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName2')]"
-					},
-					"LastSatofMonth_properties_IncrementalLoad_parameters_tableName2": {
-						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tableName2')]"
-					},
-					"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
-						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_spName')]"
 					}
 				}
 			},
@@ -376,6 +358,24 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_dbName": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_dbName2": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName2')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_tableName2": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tableName2')]"
+					},
+					"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
+						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_spName')]"
 					},
 					"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
 						"value": "[parameters('ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName')]"

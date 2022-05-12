@@ -7,6 +7,30 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "onedatafactoryADF"
 		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_dbName": {
+			"type": "string",
+			"defaultValue": "script"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName": {
+			"type": "string",
+			"defaultValue": "dbo"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme": {
+			"type": "string",
+			"defaultValue": "usersADF"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_dbName2": {
+			"type": "string",
+			"defaultValue": "CopyofScript"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_tableName2": {
+			"type": "string",
+			"defaultValue": "usersADF2"
+		},
+		"LastSatofMonth_properties_IncrementalLoad_parameters_spName": {
+			"type": "string",
+			"defaultValue": "UPDATE_tblControlADF"
+		},
 		"ScheduleTrigger_properties_CopyfromSqlDBtoCVS_parameters_SourceDBName": {
 			"type": "string",
 			"defaultValue": "script"
@@ -24,6 +48,56 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/LastSatofMonth')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Last Saturday of Month triggered",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "IncrementalLoad",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"dbName": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName')]",
+							"SchemaName": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_SchemaName')]",
+							"tablNAme": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tablNAme')]",
+							"dbName2": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName2')]",
+							"tableName2": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_tableName2')]",
+							"spName": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_spName')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2022-04-29T09:00:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								7
+							],
+							"monthlyOccurrences": [
+								{
+									"day": "Saturday",
+									"occurrence": -1
+								}
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ScheduleTrigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
