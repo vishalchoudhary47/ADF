@@ -1184,6 +1184,8 @@
 						"typeProperties": {
 							"source": {
 								"type": "SapTableSource",
+								"rfcTableOptions": "ERDAT EQ '20180216'",
+								"customRfcReadTableFunctionModule": "",
 								"partitionOption": "None"
 							},
 							"sink": {
@@ -1496,7 +1498,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/api2OnPremSqlServer')]",
+			"name": "[concat(parameters('factoryName'), '/TESTINGwebApiwithAUTH')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
