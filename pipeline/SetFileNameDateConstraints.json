@@ -24,6 +24,8 @@
 				"typeProperties": {
 					"source": {
 						"type": "SapTableSource",
+						"rfcTableOptions": "ERDAT EQ '20180216'",
+						"customRfcReadTableFunctionModule": "",
 						"partitionOption": "None"
 					},
 					"sink": {
