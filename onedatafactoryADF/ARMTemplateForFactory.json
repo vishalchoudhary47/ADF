@@ -3253,9 +3253,12 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://reqres.in/api/products",
+							"url": "http://asiaart.herokuapp.com/allartWork",
 							"method": "GET",
-							"headers": {}
+							"headers": {
+								"authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjkxMmYzZjk1ZTRiZTU0MzU5MWE3NCIsImlhdCI6MTY1MjUwNjAyOSwiZXhwIjoxNjU1MDk4MDI5fQ.h45sxhHyBIza6tYKLjonEvvuVXxRML8ibmgWC9SmRUc",
+								"Accept": "application/json"
+							}
 						}
 					},
 					{
@@ -3284,7 +3287,7 @@
 									{
 										"name": "mycolumn",
 										"value": {
-											"value": "@{activity('Web1').output.data}",
+											"value": "@{activity('Web1').output.Response}",
 											"type": "Expression"
 										}
 									}
@@ -3337,7 +3340,7 @@
 								"referenceName": "DelimitedText2",
 								"type": "DatasetReference",
 								"parameters": {
-									"fileNameDatasets": "DATA.csv"
+									"fileNameDatasets": "GetApiAuth.csv"
 								}
 							}
 						],
@@ -3346,7 +3349,7 @@
 								"referenceName": "DelimitedText2",
 								"type": "DatasetReference",
 								"parameters": {
-									"fileNameDatasets": "DATA.csv"
+									"fileNameDatasets": "GetApiAuth.csv"
 								}
 							}
 						]
@@ -3404,7 +3407,7 @@
 								"referenceName": "DelimitedText2",
 								"type": "DatasetReference",
 								"parameters": {
-									"fileNameDatasets": "DATA.csv"
+									"fileNameDatasets": "GetApiAuth.csv"
 								}
 							}
 						],
@@ -3414,7 +3417,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"SchemaNameDataset": "dbo",
-									"TableNameDataSet": "DATA"
+									"TableNameDataSet": "GetApiAuthCSV"
 								}
 							}
 						]
