@@ -73,6 +73,43 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SaveWebOutput')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Saving Web Output",
+				"linkedServiceName": {
+					"referenceName": "testingAzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ForWebActivity"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "WebOuput",
+						"folderPath": "testingFolder",
+						"container": "adfdemo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "",
+					"quoteChar": ""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SinkBinary1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -529,7 +566,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Set variable1",
+								"activity": "Set variable2",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -550,7 +587,7 @@
 									{
 										"name": "Date",
 										"value": {
-											"value": "@(concat(substr(variables('Date'), 0, 4), substr(variables('Date'), 4, 2), substr(variables('Date'), 6, 2) ))",
+											"value": "@variables('Date')",
 											"type": "Expression"
 										}
 									}
@@ -600,6 +637,26 @@
 								}
 							}
 						]
+					},
+					{
+						"name": "Set variable2",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "Date",
+							"value": {
+								"value": "@(concat(substr(variables('Date'), 0, 3), substr(variables('Date'), 4, 5), substr(variables('Date'), 6, 7) ))",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
@@ -1468,85 +1525,6 @@
 				"lastPublishTime": "2022-05-02T07:40:55Z"
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/event pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"deleteFilesAfterCompletion": false
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceBinary1",
-								"type": "DatasetReference",
-								"parameters": {
-									"fileNameDataSet": {
-										"value": "@pipeline().parameters.fileName",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SinkBinary1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"filePath": {
-						"type": "string"
-					},
-					"fileName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-04-26T06:01:11Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceBinary1')]",
-				"[concat(variables('factoryId'), '/datasets/SinkBinary1')]"
-			]
 		}
 	]
 }
