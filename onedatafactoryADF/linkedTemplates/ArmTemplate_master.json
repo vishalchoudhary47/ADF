@@ -311,6 +311,26 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "onedatafactoryADF_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"event based trigg_properties_event pipeline_parameters_filePath": {
 						"value": "[parameters('event based trigg_properties_event pipeline_parameters_filePath')]"
@@ -338,26 +358,6 @@
 					},
 					"AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName": {
 						"value": "[parameters('AutomateIncrementalPipelineDailyBasisc_properties_IncrementalLoad_parameters_spName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'onedatafactoryADF_ArmTemplate_1')]"
-			]
-		},
-		{
-			"name": "onedatafactoryADF_ArmTemplate_3",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
 					},
 					"LastSatofMonth_properties_IncrementalLoad_parameters_dbName": {
 						"value": "[parameters('LastSatofMonth_properties_IncrementalLoad_parameters_dbName')]"
