@@ -77,7 +77,7 @@
 							{
 								"name": "Date",
 								"value": {
-									"value": "@variables('Date')",
+									"value": "@(concat(substr(variables('Date'), 0, 4), substr(variables('Date'), 4, 2), substr(variables('Date'), 6, 2) ))",
 									"type": "Expression"
 								}
 							}
