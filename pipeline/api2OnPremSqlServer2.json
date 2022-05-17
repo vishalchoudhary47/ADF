@@ -130,7 +130,10 @@
 				"inputs": [
 					{
 						"referenceName": "RestResource1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"QueryParams": "a"
+						}
 					}
 				],
 				"outputs": [
