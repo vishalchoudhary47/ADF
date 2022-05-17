@@ -82,7 +82,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://prod-08.centralus.logic.azure.com:443/workflows/e7534dc680ec4ed087346f02c227f818/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Epf5Outcbe2bl0FmyrYO6nmIJ5jt0IvYFm-7e5VSciE",
+					"url": "https://prod-31.centralus.logic.azure.com:443/workflows/aa149e7827594feda2aac15bf99c1578/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=H-i0ztcLpz6i0TWQVbx9OtQOYKFZAZGkBUNhmHJ4pY0",
 					"method": "POST",
 					"headers": {
 						"Content-Type": "application/json"
