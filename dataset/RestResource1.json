@@ -5,13 +5,21 @@
 			"referenceName": "RestService1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"QueryParams": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Rest Api folders"
 		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": ""
+			"relativeUrl": {
+				"value": "@dataset().QueryParams",
+				"type": "Expression"
+			}
 		},
 		"schema": []
 	}
